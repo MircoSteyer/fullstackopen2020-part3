@@ -2,6 +2,8 @@ const express = require("express")
 const app = express()
 const port = 3001
 
+console.log("this is a test")
+
 const persons = [
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
