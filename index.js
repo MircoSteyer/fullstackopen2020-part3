@@ -1,4 +1,5 @@
 const express = require("express")
+const morgan = require("morgan")
 const app = express()
 const port = 3001
 
@@ -8,6 +9,8 @@ let persons = [
     { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
 ]
+
+
 
 const checkPostForError = (body) => {
     if (!body) return {error: "content missing"}
@@ -19,7 +22,11 @@ const checkPostForError = (body) => {
     if (persons.find(person => person.name === body.name)) return {error: `Name "${body.name}" already exists.`}
 }
 
+
 app.use(express.json())
+
+morgan.token("content", (req, res) => JSON.stringify(req.body))
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms :content"))
 
 app.get("/", (req,res) => {
     res.send(`<h1>Hello World</h1>`)
@@ -55,7 +62,6 @@ app.post("/api/persons", (req, res) => {
     const body = req.body
 
     const error = checkPostForError(body)
-    console.log(error)
     if (error) return res.status(400).json(error)
 
     const person = {
@@ -66,5 +72,10 @@ app.post("/api/persons", (req, res) => {
     persons = persons.concat(person)
     res.status(201).json(person)
 })
+
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({error: "unknown endpoint"})
+}
+app.use(unknownEndpoint)
 
 app.listen(port)
