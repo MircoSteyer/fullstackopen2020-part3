@@ -5,7 +5,10 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:ui": "rm -rf build && cd ../Fullstackopen/fullstackopen-2020/part2/phonebook && npm run build --prod && cp -r build ../../../../fullstackopen2020-part3",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m buildui && npm run deploy"
   },
   "keywords": [],
   "author": "Mirco Steyer",
@@ -20,6 +23,7 @@
   "homepage": "https://github.com/MircoSteyer/fullstackopen2020-part3#readme",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0"
   },

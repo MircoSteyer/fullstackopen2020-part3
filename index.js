@@ -1,5 +1,6 @@
 const express = require("express")
 const morgan = require("morgan")
+const cors = require("cors")
 const app = express()
 const port = 3001
 
@@ -22,6 +23,7 @@ const checkPostForError = (body) => {
     if (persons.find(person => person.name === body.name)) return {error: `Name "${body.name}" already exists.`}
 }
 
+app.use(cors())
 
 app.use(express.json())
 
