@@ -22,6 +22,7 @@ const checkPostForError = (body) => {
 
     if (persons.find(person => person.name === body.name)) return {error: `Name "${body.name}" already exists.`}
 }
+app.use(express.static("build"))
 
 app.use(cors())
 
