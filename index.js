@@ -4,6 +4,8 @@ const cors = require("cors")
 const app = express()
 const port = process.env.PORT || 3001
 
+console.log("does the debugging work?")
+
 let persons = [
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
@@ -32,6 +34,7 @@ morgan.token("content", (req, res) => JSON.stringify(req.body))
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :content"))
 
 app.get("/", (req,res) => {
+    console.log("test")
     res.send(`<h1>Hello World</h1>`)
 })
 
